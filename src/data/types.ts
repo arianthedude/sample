@@ -185,3 +185,190 @@ export interface AuditEntry {
   ip: string
   time: string
 }
+
+// ── Portal-aligned types ──
+
+export type EntityStatus = 'active' | 'inactive' | 'locked'
+
+export interface PortalUser {
+  id: string
+  firstName: string
+  lastName: string
+  name: string
+  initials: string
+  email: string
+  mobile: string
+  nationalCode: string
+  employeeCode: string
+  departmentId: string
+  status: EntityStatus
+  isSuperAdmin: boolean
+  role: string
+  color: string
+}
+
+export interface Branch {
+  id: string
+  name: string
+  code: string
+  description: string
+  phone: string
+  status: EntityStatus
+}
+
+export interface Department {
+  id: string
+  name: string
+  code: string
+  branchId: string
+  parentId: string | null
+  description: string
+  status: EntityStatus
+  head: string | null
+}
+
+export interface Employer {
+  id: string
+  name: string
+  code: string
+  description: string
+  isActive: boolean
+}
+
+export interface PortalPermission {
+  id: string
+  name: string
+  code: string
+  isActive: boolean
+}
+
+export interface PortalRole {
+  id: string
+  name: string
+  code: string
+  description: string
+  isActive: boolean
+  permissionCodes: string[]
+}
+
+export interface CodeFormat {
+  id: string
+  name: string
+  entityType: string
+  separator: string
+  segments: string[]
+  isDefault: boolean
+  isActive: boolean
+}
+
+export interface DocumentCodingField {
+  id: string
+  name: string
+  displayName: string
+  code: string
+  sortOrder: number
+  isRequired: boolean
+  values: string[]
+}
+
+export interface DocumentCodingFormat {
+  id: string
+  name: string
+  description: string
+  isDefault: boolean
+  isActive: boolean
+  fields: DocumentCodingField[]
+}
+
+export interface Workspace {
+  id: string
+  projectId: string
+  name: string
+  code: string
+  description: string
+  displayOrder: number
+  isActive: boolean
+}
+
+export interface ProjectConfiguration {
+  projectId: string
+  revisionPolicy: string
+  issuePurposeSource: string
+  engineeringSubmissionMode: string
+  uploadMode: string
+  engineeringWorkspaceEnabled: boolean
+  dccWorkspaceEnabled: boolean
+}
+
+export interface ProjectTeam {
+  id: string
+  projectId: string
+  workspaceId: string
+  name: string
+  code: string
+  description: string
+  displayOrder: number
+  isActive: boolean
+  memberCount: number
+}
+
+export interface ProjectWorkflow {
+  id: string
+  projectId: string
+  name: string
+  code: string
+  description: string
+  displayOrder: number
+  isActive: boolean
+  version: number
+  isDefault: boolean
+  stepCount: number
+  instanceCount: number
+}
+
+export interface VdrTemplate {
+  id: string
+  projectId: string
+  name: string
+  sheetName: string
+  referenceSheets: string[]
+  description: string
+  isActive: boolean
+  columnCount: number
+}
+
+export interface VdrFile {
+  id: string
+  projectId: string
+  templateId: string
+  templateName: string
+  fileName: string
+  version: number
+  uploadedBy: string
+  uploadDate: string
+  rowCount: number
+}
+
+export interface VdrRow {
+  id: string
+  fileId: string
+  rowOrder: number
+  documentNumber: string
+  title: string
+  discipline: string
+  status: string
+  revision: string
+}
+
+export interface EngineeringInboxItem {
+  id: string
+  projectId: string
+  projectCode: string
+  documentNumber: string
+  title: string
+  taskType: 'upload' | 'submit' | 'review'
+  status: 'OPEN' | 'IN_PROGRESS' | 'COMPLETED' | 'CANCELLED'
+  priority: Priority
+  dueDate: string
+  assignee: string
+}

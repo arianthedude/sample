@@ -1,6 +1,7 @@
-import { useParams, Link } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { Icon } from '@/components/Icon'
 import { PageHeader, Progress, Avatar, Breadcrumbs } from '@/components/ui'
+import { ProjectNav } from '@/components/ProjectNav'
 import { Donut, Bars, LineChart } from '@/components/Charts'
 import { projects, users, documents } from '@/data/mock'
 import { statusBadge, formatDate } from '@/lib/format'
@@ -22,9 +23,10 @@ export default function ProjectDetail() {
 
   return (
     <div>
-      <div className="mb-5"><Breadcrumbs items={[{ label: 'Home' }, { label: 'Projects', to: '/projects' }, { label: p.code }]} /></div>
+      <div className="mb-4"><Breadcrumbs items={[{ label: 'Home' }, { label: 'Projects', to: '/projects' }, { label: p.code }]} /></div>
+      <ProjectNav />
 
-      <div className="card p-6 mb-5">
+      <div className="card p-5 mb-4">
         <div className="flex flex-col lg:flex-row lg:items-start gap-5">
           <div className="flex-1">
             <div className="flex items-center gap-2 flex-wrap mb-2">
@@ -81,9 +83,9 @@ export default function ProjectDetail() {
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
         <div className="card p-5 lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-base font-semibold">Recent Documents</h3>
-            <Link to="/documents" className="text-sm text-primary-600 dark:text-primary-400 hover:underline">View register</Link>
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="text-sm font-medium">Recent Documents</h3>
+            <Link to="/documents" className="text-xs text-primary-600 dark:text-primary-400 hover:underline">View all</Link>
           </div>
           <ul className="space-y-2">
             {docs.map(d => (

@@ -6,39 +6,49 @@ type Item = { to?: string; label: string; icon?: React.ReactNode; children?: { t
 
 const nav: Item[] = [
   { to: '/', label: 'Dashboard', icon: <Icon.Dashboard />, end: true },
+  { to: '/engineering', label: 'Engineering', icon: <Icon.Flow />, end: true },
   {
     label: 'Projects', icon: <Icon.Folder />, children: [
-      { to: '/projects', label: 'Project List' },
-      { to: '/projects/new', label: 'Create Project' },
+      { to: '/projects', label: 'All projects' },
+      { to: '/projects/new', label: 'Create' },
     ],
   },
   {
     label: 'Documents', icon: <Icon.Doc />, children: [
-      { to: '/documents', label: 'Document Register' },
-      { to: '/documents/upload', label: 'Upload Document' },
+      { to: '/documents', label: 'Register' },
+      { to: '/documents/upload', label: 'Upload' },
       { to: '/documents/revisions', label: 'Revisions' },
       { to: '/documents/transmittals', label: 'Transmittals' },
     ],
   },
   {
-    label: 'Workflow', icon: <Icon.Flow />, children: [
+    label: 'Workflow', icon: <Icon.GitBranch />, children: [
       { to: '/workflow/reviews', label: 'Reviews' },
       { to: '/workflow/approvals', label: 'Approvals' },
-      { to: '/workflow/tasks', label: 'My Tasks' },
+      { to: '/workflow/tasks', label: 'Tasks' },
     ],
   },
   {
     label: 'MTO', icon: <Icon.Layers />, children: [
-      { to: '/mto', label: 'Material Take-Off' },
-      { to: '/mto/generate', label: 'Generate MTO' },
-      { to: '/mto/compare', label: 'Compare Revisions' },
+      { to: '/mto', label: 'Take-off' },
+      { to: '/mto/generate', label: 'Generate' },
+      { to: '/mto/compare', label: 'Compare' },
     ],
   },
   { to: '/search', label: 'Search', icon: <Icon.Search />, end: true },
-  { to: '/reports', label: 'Reports', icon: <Icon.Report />, end: true },
-  { to: '/users', label: 'Users', icon: <Icon.Users />, end: true },
-  { to: '/roles', label: 'Roles & Permissions', icon: <Icon.Shield />, end: true },
-  { to: '/audit', label: 'Audit Logs', icon: <Icon.Audit />, end: true },
+  {
+    label: 'Admin', icon: <Icon.Shield />, children: [
+      { to: '/admin/users', label: 'Users' },
+      { to: '/admin/roles', label: 'Roles' },
+      { to: '/admin/permissions', label: 'Permissions' },
+      { to: '/admin/branches', label: 'Branches' },
+      { to: '/admin/departments', label: 'Departments' },
+      { to: '/admin/employers', label: 'Employers' },
+      { to: '/admin/code-formats', label: 'Code formats' },
+      { to: '/admin/document-coding', label: 'Doc coding' },
+    ],
+  },
+  { to: '/audit', label: 'Audit', icon: <Icon.Audit />, end: true },
   { to: '/settings', label: 'Settings', icon: <Icon.Settings />, end: true },
 ]
 
@@ -48,32 +58,22 @@ export function Sidebar({ open, onClose }: { open: boolean; onClose: () => void 
     <>
       {open && <div className="fixed inset-0 z-30 bg-ink-950/40 lg:hidden" onClick={onClose} />}
       <aside
-        className={`fixed lg:static z-40 inset-y-0 left-0 w-72 shrink-0 border-r border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-900 flex flex-col transition-transform lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}
+        className={`fixed lg:static z-40 inset-y-0 left-0 w-64 shrink-0 border-r border-ink-200 dark:border-ink-800 bg-white dark:bg-ink-900 flex flex-col transition-transform lg:translate-x-0 ${open ? 'translate-x-0' : '-translate-x-full'}`}
         aria-label="Primary"
       >
-        <div className="flex items-center gap-2.5 px-5 h-16 border-b border-ink-200 dark:border-ink-800">
-          <span className="text-primary-600 dark:text-primary-400"><Icon.Logo size={28} /></span>
+        <div className="flex items-center gap-2 px-4 h-14 border-b border-ink-200 dark:border-ink-800">
+          <span className="text-primary-600 dark:text-primary-400"><Icon.Logo size={24} /></span>
           <div className="leading-tight">
-            <div className="font-semibold text-ink-900 dark:text-ink-50 tracking-tight">Stratum</div>
-            <div className="text-[11px] text-ink-400 font-medium tracking-wide uppercase">EDMS</div>
+            <div className="font-semibold text-sm text-ink-900 dark:text-ink-50">Stratum</div>
+            <div className="text-[10px] text-ink-400 uppercase tracking-wider">Portal</div>
           </div>
         </div>
 
-        <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
+        <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-0.5">
           {nav.map((item) => (
             <NavGroup key={item.label} item={item} loc={loc.pathname} />
           ))}
         </nav>
-
-        <div className="px-3 py-3 border-t border-ink-200 dark:border-ink-800">
-          <div className="rounded-xl bg-gradient-to-br from-primary-500 to-primary-700 p-3.5 text-white">
-            <div className="text-xs font-semibold opacity-90">Storage</div>
-            <div className="mt-1.5 h-1.5 rounded-full bg-white/30 overflow-hidden">
-              <div className="h-full w-[68%] bg-white rounded-full" />
-            </div>
-            <div className="mt-1.5 text-[11px] opacity-80">684 GB of 1 TB used</div>
-          </div>
-        </div>
       </aside>
     </>
   )
@@ -99,7 +99,7 @@ function NavGroup({ item, loc }: { item: Item; loc: string }) {
         <Icon.ChevronDown size={14} className={`transition-transform ${open ? 'rotate-180' : ''}`} />
       </button>
       {open && (
-        <div className="ml-5 pl-3 border-l border-ink-200 dark:border-ink-800 mt-0.5 space-y-0.5">
+        <div className="ml-4 pl-2 border-l border-ink-200 dark:border-ink-800 mt-0.5 space-y-0.5">
           {item.children!.map(c => (
             <NavLink key={c.to} to={c.to} className={({ isActive }) => `nav-link ${isActive ? 'nav-link-active' : ''} py-1.5 text-[13px]`}>
               {c.label}

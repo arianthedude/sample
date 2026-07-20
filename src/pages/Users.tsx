@@ -9,7 +9,7 @@ export default function Users() {
   return (
     <div>
       <PageHeader title="Users" subtitle={`${users.length} team members across all projects`}
-        breadcrumbs={[{ label: 'Home' }, { label: 'Users' }]}
+        breadcrumbs={[{ label: 'Admin' }, { label: 'Users' }]}
         actions={<button className="btn-primary"><Icon.Plus size={16} />Invite user</button>} />
       <div className="card p-3 mb-4">
         <div className="relative">

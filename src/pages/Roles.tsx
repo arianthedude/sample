@@ -12,7 +12,7 @@ export default function Roles() {
   return (
     <div>
       <PageHeader title="Roles & Permissions" subtitle={`${roles.length} roles configured`}
-        breadcrumbs={[{ label: 'Home' }, { label: 'Roles & Permissions' }]}
+        breadcrumbs={[{ label: 'Admin' }, { label: 'Roles' }]}
         actions={<button className="btn-primary"><Icon.Plus size={16} />New role</button>} />
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">

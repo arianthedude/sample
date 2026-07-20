@@ -5,13 +5,14 @@ import { documents, projects, users } from '@/data/mock'
 
 const commands = [
   { kind: 'Page', label: 'Dashboard', to: '/', hint: 'Overview' },
-  { kind: 'Page', label: 'Document Register', to: '/documents', hint: 'Browse all documents' },
+  { kind: 'Page', label: 'Engineering', to: '/engineering', hint: 'Cross-project' },
+  { kind: 'Page', label: 'Projects', to: '/projects', hint: 'All projects' },
+  { kind: 'Page', label: 'Document Register', to: '/documents', hint: 'Browse' },
   { kind: 'Page', label: 'Upload Document', to: '/documents/upload', hint: 'New upload' },
   { kind: 'Page', label: 'Workflow Board', to: '/workflow/reviews', hint: 'Kanban' },
-  { kind: 'Page', label: 'Material Take-Off', to: '/mto', hint: 'MTO module' },
-  { kind: 'Page', label: 'Search', to: '/search', hint: 'Global search' },
-  { kind: 'Page', label: 'Reports', to: '/reports', hint: 'Analytics' },
-  { kind: 'Page', label: 'Users', to: '/users', hint: 'Team' },
+  { kind: 'Page', label: 'Material Take-Off', to: '/mto', hint: 'MTO' },
+  { kind: 'Page', label: 'Admin — Users', to: '/admin/users', hint: 'Super-admin' },
+  { kind: 'Page', label: 'Admin — VDR Coding', to: '/admin/document-coding', hint: 'Formats' },
   { kind: 'Page', label: 'Settings', to: '/settings', hint: 'Preferences' },
 ]
 
@@ -84,7 +85,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
           {results.usrs.length > 0 && (
             <Section title="People">
               {results.usrs.map(u => (
-                <button key={u.id} onClick={() => go('/users')} className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-ink-100 dark:hover:bg-ink-800 text-left">
+                <button key={u.id} onClick={() => go('/admin/users')} className="w-full flex items-center justify-between px-3 py-2 rounded-xl hover:bg-ink-100 dark:hover:bg-ink-800 text-left">
                   <span className="flex items-center gap-2.5"><span className="w-6 h-6 rounded-full text-white text-[10px] font-medium flex items-center justify-center" style={{ background: u.color }}>{u.initials}</span><span className="text-sm text-ink-700 dark:text-ink-200">{u.name}</span></span>
                   <span className="text-xs text-ink-400">{u.role}</span>
                 </button>

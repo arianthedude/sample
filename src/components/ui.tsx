@@ -81,3 +81,42 @@ export function Progress({ value, color = 'primary' }: { value: number; color?: 
     </div>
   )
 }
+
+export function DataTable<T extends object>({ columns, rows, empty }: {
+  columns: { key: keyof T & string; label: string; className?: string; render?: (row: T) => React.ReactNode }[]
+  rows: T[]
+  empty?: string
+}) {
+  if (!rows.length) return <EmptyState title={empty ?? 'No records'} />
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full">
+        <thead>
+          <tr className="text-[11px] font-medium uppercase tracking-wide text-ink-400 border-b border-ink-200 dark:border-ink-800">
+            {columns.map(c => <th key={c.key} className={`px-4 py-2.5 text-left font-medium ${c.className ?? ''}`}>{c.label}</th>)}
+          </tr>
+        </thead>
+        <tbody className="divide-rows">
+          {rows.map((row, i) => (
+            <tr key={i} className="hover:bg-ink-50/60 dark:hover:bg-ink-800/30">
+              {columns.map(c => (
+                <td key={c.key} className={`table-cell ${c.className ?? ''}`}>
+                  {c.render ? c.render(row) : String((row as Record<string, unknown>)[c.key] ?? '—')}
+                </td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  )
+}
+
+export function StatusDot({ active, label }: { active: boolean; label?: string }) {
+  return (
+    <span className={`inline-flex items-center gap-1.5 text-xs ${active ? 'text-success-700 dark:text-success-400' : 'text-ink-400'}`}>
+      <span className={`w-1.5 h-1.5 rounded-full ${active ? 'bg-success-500' : 'bg-ink-300 dark:bg-ink-600'}`} />
+      {label ?? (active ? 'Active' : 'Inactive')}
+    </span>
+  )
+}

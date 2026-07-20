@@ -1,8 +1,19 @@
 import type {
   User, Project, Doc, MtoItem, Activity, Task, Notification, AuditEntry,
 } from './types'
+import { portalUsers } from './portalSamples'
+
+const portalAsUsers: User[] = portalUsers.map(u => ({
+  id: u.id,
+  name: u.name,
+  initials: u.initials,
+  role: u.role,
+  email: u.email,
+  color: u.color,
+}))
 
 export const users: User[] = [
+  ...portalAsUsers,
   { id: 'u1', name: 'Sarah Chen', initials: 'SC', role: 'Lead Piping Engineer', email: 's.chen@stratum.io', color: '#2563eb' },
   { id: 'u2', name: 'Marcus Holloway', initials: 'MH', role: 'Project Manager', email: 'm.holloway@stratum.io', color: '#16a34a' },
   { id: 'u3', name: 'Priya Nair', initials: 'PN', role: 'Process Engineer', email: 'p.nair@stratum.io', color: '#d97706' },
@@ -16,6 +27,14 @@ export const users: User[] = [
 ]
 
 export const projects: Project[] = [
+  {
+    id: 'p0', code: 'SYS-ADMIN', name: 'System Administration',
+    client: 'Internal', location: 'Head Office', status: 'Active', progress: 100,
+    startDate: '2024-01-01', dueDate: '2099-12-31', budget: 0, docs: 0, openIssues: 0,
+    description: 'Portal system project — seeded by DatabaseSeeder for admin operations.',
+    disciplines: [{ name: 'Process', progress: 100, docs: 0 }],
+    team: ['u-super', 'u-test'],
+  },
   {
     id: 'p1', code: 'PRJ-2024-014', name: 'Northgate Refinery — Hydrocracker Unit',
     client: 'Northgate Energy', location: 'Rotterdam, NL', status: 'Active', progress: 68,
@@ -302,10 +321,13 @@ export const auditLog: AuditEntry[] = Array.from({ length: 24 }).map((_, i) => (
 }))
 
 export const roles = [
-  { id: 'r1', name: 'Administrator', users: 2, permissions: 48, description: 'Full system access including configuration and audit' },
-  { id: 'r2', name: 'Document Controller', users: 4, permissions: 32, description: 'Manage document register, transmittals, and revisions' },
-  { id: 'r3', name: 'Lead Engineer', users: 8, permissions: 28, description: 'Review, approve, and assign documents within discipline' },
-  { id: 'r4', name: 'Engineer', users: 36, permissions: 18, description: 'Upload, revise, and comment on assigned documents' },
-  { id: 'r5', name: 'Client Reviewer', users: 6, permissions: 8, description: 'External review and comment on client-issued documents' },
-  { id: 'r6', name: 'Viewer', users: 120, permissions: 4, description: 'Read-only access to approved documents' },
+  { id: 'r0', name: 'Super Admin', users: 1, permissions: 48, description: 'Portal superadmin role — full system access', code: 'superadmin' },
+  { id: 'r1', name: 'Administrator', users: 2, permissions: 48, description: 'Full system access including configuration and audit', code: 'administrator' },
+  { id: 'r2', name: 'Document Controller', users: 4, permissions: 32, description: 'Manage document register, transmittals, and revisions', code: 'document_controller' },
+  { id: 'r3', name: 'Lead Engineer', users: 8, permissions: 28, description: 'Review, approve, and assign documents within discipline', code: 'lead_engineer' },
+  { id: 'r4', name: 'Engineer', users: 36, permissions: 18, description: 'Upload, revise, and comment on assigned documents', code: 'engineer' },
+  { id: 'r5', name: 'Client Reviewer', users: 6, permissions: 8, description: 'External review and comment on client-issued documents', code: 'client_reviewer' },
+  { id: 'r6', name: 'Viewer', users: 120, permissions: 4, description: 'Read-only access to approved documents', code: 'viewer' },
 ]
+
+export * from './portalSamples'
